@@ -1,10 +1,5 @@
 import styled from "styled-components";
-
-interface StyledLinkNav {
-    isActive?: boolean
-}
-
-export const HeaderContainer =styled.header<StyledLinkNav>`
+export const HeaderContainer = styled.header `
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -35,4 +30,4 @@ export const HeaderContainer =styled.header<StyledLinkNav>`
             color: ${(props) => props.theme["green-500"]};
         }
     }
-    `
+    `;

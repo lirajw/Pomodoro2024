@@ -9,7 +9,7 @@ export interface Cycle {
 }
 export interface CycleState {
     cycles: Cycle[],
-    activeCicleId: string | null
+    activeCicleId: string | null | undefined
 }
 
 export enum ActionTypes {
