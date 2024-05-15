@@ -23,7 +23,7 @@ export function cyclesReducer(state, action) {
                         return cycle;
                     }
                 }),
-                activeCicleId: null
+                activeCicleId: ''
             };
         case ActionTypes.MARK_AS_FINISHED:
             return {
@@ -36,7 +36,7 @@ export function cyclesReducer(state, action) {
                         return cycle;
                     }
                 }),
-                activeCicleId: null
+                activeCicleId: ''
             };
         default:
             return state;

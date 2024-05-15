@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useEffect, useReducer, useState } from "react";
-import { ActionTypes, Cycle, CycleState, cyclesReducer, typeAction } from "../reducers/Cycles";
+import { ActionTypes, Cycle, CycleState, cyclesReducer } from "../reducers/Cycles";
 import { differenceInSeconds } from "date-fns";
 
 interface newCycle {
@@ -10,8 +10,8 @@ interface newCycle {
 
 interface CyclesContextType {
     cycles: Cycle[];
-    activeCycle: Cycle | undefined;
-    activeCicleId: string | null;
+    activeCycle?: Cycle;
+    activeCicleId: string;
     amountSecondsPassed: number,
     totalSeconds: number,
     minutes: string,
@@ -31,21 +31,18 @@ interface CyclesContextProviderProps {
 export const CyclesContext = createContext({} as CyclesContextType)
 export function CycleContextProvider ({ children } : CyclesContextProviderProps) {
     //const [cycles, setCycles] = useState<Cycle[]>([])
+    const [cycleState, dispatch]  = useReducer(cyclesReducer, {
+        cycles: []     
 
-    const [cycleState, dispatch]  = useReducer(
-        cyclesReducer, {
-            activeCicleId: null,
-            cycles: []
-        } as CycleState, 
-        (initialState : CycleState)  => {
-            const storedCycleStateAsJson = localStorage.getItem('@Pomodoro2024:CycleState')
+    } as never, (initialState : never) => {
+        const storedCycleStateAsJson = localStorage.getItem('@Pomodoro2024:CycleState')
 
-            if(storedCycleStateAsJson) {
-                return JSON.parse(storedCycleStateAsJson) as CycleState
-            }
+        if(storedCycleStateAsJson) {
+            return JSON.parse(storedCycleStateAsJson) as CycleState
+        }
 
-            return initialState
-        })
+        return initialState
+    })
 
     const {cycles, activeCicleId} = cycleState
     const activeCycle = cycleState.cycles.find((cycle: Cycle) => cycle.id === activeCicleId)

@@ -6,7 +6,6 @@ export const CyclesContext = createContext({});
 export function CycleContextProvider({ children }) {
     //const [cycles, setCycles] = useState<Cycle[]>([])
     const [cycleState, dispatch] = useReducer(cyclesReducer, {
-        activeCicleId: null,
         cycles: []
     }, (initialState) => {
         const storedCycleStateAsJson = localStorage.getItem('@Pomodoro2024:CycleState');

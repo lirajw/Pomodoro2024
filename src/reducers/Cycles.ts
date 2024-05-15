@@ -9,7 +9,7 @@ export interface Cycle {
 }
 export interface CycleState {
     cycles: Cycle[],
-    activeCicleId: string | null | undefined
+    activeCicleId: string
 }
 
 export enum ActionTypes {
@@ -18,14 +18,21 @@ export enum ActionTypes {
     MARK_AS_FINISHED = 'MARK_AS_FINISHED'
 }
 
-export interface typeAction {    
-    type: ActionTypes,
-    payload: {
-        activeCicleId?: string | null,
-        newCycle?: Cycle
+export type Action =
+|{    
+    type: ActionTypes.ADD_NEW_VALUE,
+    payload: {        
+        newCycle: Cycle
     }    
 }
-export function cyclesReducer(state: CycleState, action: typeAction) {
+| {
+    type: | ActionTypes.MARK_AS_FINISHED | ActionTypes.STOP_CYCLE,
+    payload: {
+        activeCicleId: string ,        
+    }  
+}
+
+export function cyclesReducer(state: CycleState, action: Action): CycleState {
     switch (action.type) {
         case ActionTypes.ADD_NEW_VALUE:
             return {
@@ -43,7 +50,7 @@ export function cyclesReducer(state: CycleState, action: typeAction) {
                         return cycle
                     }
                  }),
-                activeCicleId: null
+                activeCicleId: ''
             }
         case ActionTypes.MARK_AS_FINISHED:
             return {
@@ -55,7 +62,7 @@ export function cyclesReducer(state: CycleState, action: typeAction) {
                         return cycle
                     }
                 }),
-                activeCicleId: null
+                activeCicleId: ''
             }
         default:
             return state;
